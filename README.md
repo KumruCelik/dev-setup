@@ -1,5 +1,7 @@
 # dev-setup
 
+[![CI](https://github.com/KumruCelik/dev-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/KumruCelik/dev-setup/actions/workflows/ci.yml)
+
 Tüm projelerim için standart Python proje şablonu.
 
 ## Problem
