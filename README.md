@@ -37,8 +37,12 @@ uv run pre-commit install
 make test
 ```
 
-Sonra `pyproject.toml` içindeki `name` alanını ve `src/dev_setup/` klasör
-adını yeni proje adıyla değiştir.
+Sonra şablonu yeni isme uyarla — tek komut, 6 dosyadaki 11 referansı birden
+değiştirir ve lock dosyasını yeniden üretir:
+
+```
+./scripts/yeniden_adlandir.sh yeni-proje
+```
 
 ## Sonuç
 
@@ -52,16 +56,9 @@ tests/test_main.py::test_n_eleman_sayisindan_buyuk   PASSED
 3 passed in 0.04s
 ```
 
-**Coverage:**
-
-```
-Name                        Stmts   Miss  Cover   Missing
----------------------------------------------------------
-src/dev_setup/__init__.py       2      1    50%   2
-src/dev_setup/main.py           6      0   100%
----------------------------------------------------------
-TOTAL                           8      1    88%
-```
+**Coverage:** `make test` kapsam raporunu üretir. Bu README'ye sabit bir
+yüzde yazılmıyor — elle yazılan sayı kod değişince eskir ve yalan söyler.
+Güncel değer için `make test` çalıştır.
 
 **CI:** GitHub Actions'ta lint + test her push'ta çalışıyor, yeşil.
 
@@ -78,9 +75,8 @@ gerekiyor.
   proje büyürse açılmalı.
 - Coverage için zorunlu bir eşik yok. Coverage'ı kalite ölçüsü olarak değil,
   "bu satır hiç çalışmamış" uyarısı olarak kullanıyorum.
-- `__init__.py`'de `uv init`'ten kalan örnek `main()` fonksiyonu duruyor ve
-  test edilmiyor — coverage'daki %88'in sebebi bu.
 - Konteyner root kullanıcısıyla çalışıyor. Üretim için non-root kullanıcı
   tanımlanmalı.
-- Şablonu yeni projeye uyarlarken isim değişikliği elle yapılıyor. İleride
-  bunu bir script'e bağlamak gerekebilir.
+- `src/*/main.py` ve `tests/test_main.py` şablondan gelen örnek koddur.
+  Yeni projede ilk iş bunları silmek olmalı; Dockerfile'ın `CMD` satırı da
+  bu modülü işaret ettiği için birlikte güncellenmeli.
